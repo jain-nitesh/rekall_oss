@@ -1,0 +1,104 @@
+version: '3.8'
+
+services:
+  # PostgreSQL database with pgvector extension
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: rekall_postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: rekall
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Backend API service
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: rekall_backend
+    environment:
+      # Database
+      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/rekall
+      
+      # JWT
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY:-change-this-secret-key-in-production-min-32-chars}
+      
+      # AI Provider (ollama or openai)
+      AI_PROVIDER: ${AI_PROVIDER:-ollama}
+      
+      # Ollama settings
+      OLLAMA_BASE_URL: ${OLLAMA_BASE_URL:-http://ollama:11434}
+      OLLAMA_EXTRACTION_MODEL: ${OLLAMA_EXTRACTION_MODEL:-llama3}
+      OLLAMA_EMBEDDING_MODEL: ${OLLAMA_EMBEDDING_MODEL:-nomic-embed-text}
+      
+      # OpenAI settings (if using OpenAI)
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      OPENAI_EXTRACTION_MODEL: ${OPENAI_EXTRACTION_MODEL:-gpt-4o-mini}
+      OPENAI_EMBEDDING_MODEL: ${OPENAI_EMBEDDING_MODEL:-text-embedding-3-small}
+      
+      # Server settings
+      HOST: 0.0.0.0
+      PORT: 8000
+      DEBUG: ${DEBUG:-false}
+      
+      # CORS
+      CORS_ORIGINS: ${CORS_ORIGINS:-*}
+      
+      # Firebase (path to service account file)
+      FIREBASE_SERVICE_ACCOUNT_PATH: /app/firebase-service-account.json
+      
+      # Email settings (for magic links)
+      SMTP_HOST: ${SMTP_HOST:-}
+      SMTP_PORT: ${SMTP_PORT:-587}
+      SMTP_USER: ${SMTP_USER:-}
+      SMTP_PASSWORD: ${SMTP_PASSWORD:-}
+      SMTP_FROM_EMAIL: ${SMTP_FROM_EMAIL:-noreply@recall.app}
+      SMTP_USE_TLS: ${SMTP_USE_TLS:-true}
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./firebase-service-account.json:/app/firebase-service-account.json:ro
+    depends_on:
+      postgres:
+        condition: service_healthy
+    command: >
+      sh -c "
+        echo 'Enabling pgvector extension...' &&
+        psql $$DATABASE_URL -c 'CREATE EXTENSION IF NOT EXISTS vector;' || true &&
+        echo 'Running migrations...' &&
+        alembic upgrade head &&
+        echo 'Starting server...' &&
+        uvicorn main:app --host 0.0.0.0 --port 8000
+      "
+
+  # Ollama service (optional, only needed if using Ollama as AI provider)
+  ollama:
+    image: ollama/ollama:latest
+    container_name: rekall_ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    # Uncomment the following if you want Ollama to pull models on startup
+    # command: >
+    #   sh -c "
+    #     ollama serve &
+    #     sleep 5 &&
+    #     ollama pull llama3 &&
+    #     ollama pull nomic-embed-text &&
+    #     wait
+    #   "
+
+volumes:
+  postgres_data:
+  ollama_data:
+

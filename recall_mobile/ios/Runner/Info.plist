@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>CFBundleDisplayName</key>
+	<string>ReKall</string>
+	<key>CFBundleExecutable</key>
+	<string>$(EXECUTABLE_NAME)</string>
+	<key>CFBundleIdentifier</key>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>recall_mobile</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>$(FLUTTER_BUILD_NAME)</string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
+	<key>CFBundleVersion</key>
+	<string>$(FLUTTER_BUILD_NUMBER)</string>
+	<key>LSRequiresIPhoneOS</key>
+	<true/>
+	<key>UILaunchStoryboardName</key>
+	<string>LaunchScreen</string>
+	<key>UIMainStoryboardFile</key>
+	<string>Main</string>
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+	<key>UISupportedInterfaceOrientations~ipad</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
+	<key>CADisableMinimumFrameDurationOnPhone</key>
+	<true/>
+	<key>UIApplicationSupportsIndirectInputEvents</key>
+	<true/>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>remote-notification</string>
+	</array>
+	<key>FirebaseAppDelegateProxyEnabled</key>
+	<true/>
+	<!-- Universal Links configuration for space invitations -->
+	<!-- Universal links use HTTPS (https://YOUR_BACKEND_DOMAIN/invite/*) -->
+	<!-- Verified via apple-app-site-association file on backend -->
+	<!-- NOTE: FlutterDeepLinkingEnabled removed - it conflicts with GoRouter -->
+	<!-- GoRouter handles all routing including deep links -->
+
+	<!-- Custom URL scheme for deep linking (rekall://invite/TOKEN) -->
+	<!-- Notification permission description (required for FCM on iOS) -->
+	<key>NSUserNotificationUsageDescription</key>
+	<string>ReKall uses notifications to remind you about saved content and memory feed updates.</string>
+
+	<!-- Camera access for capturing photos and videos -->
+	<key>NSCameraUsageDescription</key>
+	<string>ReKall uses the camera to capture photos and short videos for your personal memory library.</string>
+
+	<!-- Microphone access for video recording -->
+	<key>NSMicrophoneUsageDescription</key>
+	<string>ReKall uses the microphone to record audio with video captures.</string>
+
+	<!-- Photo library access (required by file_picker and image_picker) -->
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>ReKall needs access to your photo library to select or save images and videos.</string>
+
+	<key>CFBundleURLTypes</key>
+	<array>
+		<!-- Custom URL scheme for deep linking -->
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>com.rekallhq.rekall</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>rekall</string>
+			</array>
+		</dict>
+		<!-- receive_sharing_intent URL scheme for share extension redirect -->
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>com.rekallhq.rekall.share</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>ShareMedia-com.rekallhq.rekall</string>
+			</array>
+		</dict>
+		<!-- Google Sign-In reversed client ID (from GoogleService-Info.plist) -->
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>com.rekallhq.rekall.google</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>YOUR_GOOGLE_CLIENT_ID</string>
+			</array>
+		</dict>
+	</array>
+</dict>
+</plist>

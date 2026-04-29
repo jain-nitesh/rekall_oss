@@ -1,0 +1,9 @@
+targets:
+  $default:
+    builders:
+      freezed:
+        options:
+          # Ensure proper formatting
+          format: true
+          # Use shorter generated code (may help with formatting)
+          mutable: false

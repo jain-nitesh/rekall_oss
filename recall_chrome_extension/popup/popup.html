@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ReCall</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo">ReCall</div>
+      <div class="subtitle">Bookmark Sync</div>
+    </header>
+
+    <!-- Logged Out State -->
+    <div id="view-login" class="view">
+      <p class="description">Sign in to sync your Chrome bookmarks to ReCall.</p>
+      <button id="btn-login" class="btn btn-primary">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M17.64 9.205c0-.639-.057-1.252-.164-1.841H9v3.481h4.844a4.14 4.14 0 01-1.796 2.716v2.259h2.908c1.702-1.567 2.684-3.875 2.684-6.615z" fill="#4285F4"/>
+          <path d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 009 18z" fill="#34A853"/>
+          <path d="M3.964 10.71A5.41 5.41 0 013.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 000 9c0 1.452.348 2.827.957 4.042l3.007-2.332z" fill="#FBBC05"/>
+          <path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 00.957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z" fill="#EA4335"/>
+        </svg>
+        Sign in with Google
+      </button>
+      <div id="login-error" class="error hidden"></div>
+    </div>
+
+    <!-- Logged In: Main View -->
+    <div id="view-main" class="view hidden">
+      <div class="user-info">
+        <div class="user-avatar" id="user-avatar">?</div>
+        <div class="user-details">
+          <div class="user-name" id="user-name">—</div>
+          <div class="user-email" id="user-email">—</div>
+        </div>
+        <button id="btn-logout" class="btn-icon" title="Sign out">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-value" id="stat-total">—</div>
+          <div class="stat-label">Chrome Bookmarks</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value" id="stat-synced">—</div>
+          <div class="stat-label">Synced</div>
+        </div>
+      </div>
+
+      <div id="last-sync" class="last-sync hidden">
+        Last sync: <span id="last-sync-time">—</span>
+      </div>
+
+      <div class="actions">
+        <button id="btn-sync" class="btn btn-primary">Sync All Bookmarks</button>
+        <button id="btn-sync-new" class="btn btn-secondary hidden">Sync New Only</button>
+      </div>
+
+      <div id="sync-error" class="error hidden"></div>
+    </div>
+
+    <!-- Syncing Progress View -->
+    <div id="view-progress" class="view hidden">
+      <div class="progress-info">
+        <div class="progress-stage" id="progress-stage">Preparing...</div>
+        <div class="progress-bar">
+          <div class="progress-fill" id="progress-fill"></div>
+        </div>
+        <div class="progress-detail" id="progress-detail">0 / 0</div>
+      </div>
+    </div>
+
+    <!-- Sync Complete View -->
+    <div id="view-complete" class="view hidden">
+      <div class="complete-icon">&#10003;</div>
+      <div class="complete-title">Sync Complete</div>
+      <div class="complete-stats">
+        <div><span id="result-created">0</span> bookmarks added</div>
+        <div><span id="result-skipped">0</span> already synced</div>
+        <div><span id="result-spaces">0</span> spaces created</div>
+      </div>
+      <button id="btn-done" class="btn btn-secondary">Done</button>
+    </div>
+
+    <!-- Settings -->
+    <div id="view-settings" class="view hidden">
+      <h3>Settings</h3>
+      <label class="toggle">
+        <input type="checkbox" id="setting-auto-sync" checked>
+        <span>Auto-sync new bookmarks</span>
+      </label>
+      <label class="toggle">
+        <input type="checkbox" id="setting-other-bookmarks" checked>
+        <span>Include "Other Bookmarks"</span>
+      </label>
+      <label class="toggle">
+        <input type="checkbox" id="setting-mobile-bookmarks">
+        <span>Include "Mobile Bookmarks"</span>
+      </label>
+      <button id="btn-settings-back" class="btn btn-secondary">Back</button>
+    </div>
+
+    <footer id="footer-settings" class="hidden">
+      <button id="btn-open-settings" class="btn-link">Settings</button>
+    </footer>
+  </div>
+
+  <script src="../lib/url-utils.js"></script>
+  <script src="../lib/storage.js"></script>
+  <script src="../lib/api-client.js"></script>
+  <script src="../lib/auth.js"></script>
+  <script src="../lib/bookmark-sync.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
