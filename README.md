@@ -6,6 +6,25 @@ Save anything from your phone. AI organizes it. Search finds it years later.
 
 ---
 
+## Screenshots
+
+<p align="center">
+  <img src="assets/screenshots/1.png" width="18%" />
+  <img src="assets/screenshots/2.png" width="18%" />
+  <img src="assets/screenshots/3.png" width="18%" />
+  <img src="assets/screenshots/4.png" width="18%" />
+  <img src="assets/screenshots/5.png" width="18%" />
+</p>
+<p align="center">
+  <img src="assets/screenshots/6.png" width="18%" />
+  <img src="assets/screenshots/7.png" width="18%" />
+  <img src="assets/screenshots/8.png" width="18%" />
+  <img src="assets/screenshots/9.png" width="18%" />
+  <img src="assets/screenshots/10.png" width="18%" />
+</p>
+
+---
+
 ## What is ReKall?
 
 ReKall is a personal memory engine. Share a link from any app, snap a photo, or paste text — ReKall stores it, understands it with AI, and surfaces connections you'd never find manually.
